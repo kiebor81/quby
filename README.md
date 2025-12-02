@@ -34,17 +34,19 @@ gem install mysql2
 
 ## Quick Start
 
+See [`demo.rb`](examples/demo.rb) for more extensive examples.
+
 ```ruby
-require_relative ''quby''
+require_relative 'quby'
 
 # Configure once
-Quby.setup(:sqlite, database: ''app.db'')
+Quby.setup(:sqlite, database: 'app.db')
 
 # Query builder
 users = Quby.connection.get(
-  Quby.connection.query(''users'')
-    .where(''age'', ''>'', 18)
-    .order_by(''name'')
+  Quby.connection.query('users')
+    .where('age', '>', 18)
+    .order_by('name')
     .limit(10)
 )
 
@@ -56,7 +58,7 @@ end
 
 repo = UserRepository.new
 user = repo.find(1)
-users = repo.where(''age'', ''>'', 18)
+users = repo.where('age', '>', 18)
 ```
 
 ## Documentation
@@ -150,22 +152,12 @@ db.raw('SELECT *, AVG(salary) OVER (PARTITION BY department) as dept_avg FROM em
 db.raw('INSERT INTO users (id, name) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET name=excluded.name', id, name)
 ```
 
-## License
-
-MIT License - see LICENSE file
-
 ## Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-- Report bugs and suggest features via [GitHub Issues](https://github.com/kiebor81/quby/issues)
-- Submit pull requests for bug fixes and features
-- Follow the code style and testing guidelines
-- All contributions must include tests
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Acknowledgments
 
 Inspired by [SqlKata](https://sqlkata.com/) (.NET) and [Arel](https://github.com/rails/arel) (Ruby).
-
 
 This is a personal project, but suggestions and bug reports are welcome via issues.
