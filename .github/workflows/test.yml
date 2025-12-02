@@ -1,0 +1,36 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        ruby: ['2.7', '3.0', '3.1', '3.2', '3.3']
+    
+    name: Ruby ${{ matrix.ruby }}
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      
+      - name: Install dependencies
+        run: bundle install
+      
+      - name: Run tests
+        run: bundle exec rake test
+      
+      - name: Report test results
+        if: always()
+        run: echo "Tests completed for Ruby ${{ matrix.ruby }}"
