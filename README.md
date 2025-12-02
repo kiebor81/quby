@@ -1,4 +1,4 @@
-﻿# Quby - A Lightweight Query Builder for Ruby
+﻿# Quby 
 
 A fluent, intuitive query builder for Ruby inspired by .NET''s SqlKata. Perfect for projects where Active Record feels like overkill.
 
