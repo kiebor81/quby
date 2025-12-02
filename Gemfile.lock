@@ -28,6 +28,7 @@ GEM
       mini_portile2 (~> 2.8.0)
 
 PLATFORMS
+  ruby
   x64-mingw-ucrt
 
 DEPENDENCIES
