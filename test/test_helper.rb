@@ -14,7 +14,7 @@ SimpleCov.start do
 end
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-require 'quby'
+require 'querykit'
 
 require 'minitest/autorun'
 require 'minitest/reporters'
@@ -27,7 +27,7 @@ Minitest::Reporters.use! [
 # Test helper for setting up in-memory SQLite database
 module TestHelper
   def setup_db
-    @db = Quby.connect(:sqlite, ':memory:')
+    @db = QueryKit.connect(:sqlite, ':memory:')
     create_test_schema
   end
 

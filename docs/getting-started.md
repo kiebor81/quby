@@ -22,16 +22,16 @@ Configure once at application startup:
 require_relative 'lib/quby'
 
 # Block style
-Quby.configure do |config|
+QueryKit.configure do |config|
   config.adapter = :sqlite
   config.connection_options = { database: 'db/app.db' }
 end
 
 # Shorthand
-Quby.setup(:sqlite, database: 'db/app.db')
+QueryKit.setup(:sqlite, database: 'db/app.db')
 
 # Use anywhere
-db = Quby.connection
+db = QueryKit.connection
 ```
 
 ### Environment-Specific
@@ -39,11 +39,11 @@ db = Quby.connection
 ```ruby
 case ENV['RACK_ENV']
 when 'development'
-  Quby.setup(:sqlite, database: 'db/development.db')
+  QueryKit.setup(:sqlite, database: 'db/development.db')
 when 'test'
-  Quby.setup(:sqlite, database: ':memory:')
+  QueryKit.setup(:sqlite, database: ':memory:')
 when 'production'
-  Quby.setup(:postgresql,
+  QueryKit.setup(:postgresql,
     host: ENV['DB_HOST'],
     dbname: ENV['DB_NAME'],
     user: ENV['DB_USER'],
@@ -57,9 +57,9 @@ end
 For scripts or multiple databases:
 
 ```ruby
-db = Quby.connect(:sqlite, 'database.db')
-db = Quby.connect(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
-db = Quby.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
+db = QueryKit.connect(:sqlite, 'database.db')
+db = QueryKit.connect(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
+db = QueryKit.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
 ```
 
 ## Basic Usage
@@ -67,7 +67,7 @@ db = Quby.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root',
 ### SELECT
 
 ```ruby
-db = Quby.connection
+db = QueryKit.connection
 
 # Build query
 query = db.query('users')

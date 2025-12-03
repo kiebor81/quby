@@ -4,13 +4,13 @@ require_relative 'test_helper'
 
 class AdapterTest < Minitest::Test
   def test_sqlite_adapter_initialization
-    adapter = Quby::Adapters::SQLiteAdapter.new(':memory:')
-    assert_instance_of Quby::Adapters::SQLiteAdapter, adapter
+    adapter = QueryKit::Adapters::SQLiteAdapter.new(':memory:')
+    assert_instance_of QueryKit::Adapters::SQLiteAdapter, adapter
     adapter.close
   end
 
   def test_adapter_base_class_not_implemented
-    adapter = Quby::Adapters::Adapter.new
+    adapter = QueryKit::Adapters::Adapter.new
     
     assert_raises(NotImplementedError) { adapter.execute('SELECT 1') }
     assert_raises(NotImplementedError) { adapter.begin_transaction }
@@ -19,14 +19,14 @@ class AdapterTest < Minitest::Test
   end
 
   def test_connect_factory_method_sqlite
-    db = Quby.connect(:sqlite, ':memory:')
-    assert_instance_of Quby::Connection, db
-    assert_instance_of Quby::Adapters::SQLiteAdapter, db.adapter
+    db = QueryKit.connect(:sqlite, ':memory:')
+    assert_instance_of QueryKit::Connection, db
+    assert_instance_of QueryKit::Adapters::SQLiteAdapter, db.adapter
   end
 
   def test_connect_factory_method_invalid_adapter
     error = assert_raises(ArgumentError) do
-      Quby.connect(:invalid_db, {})
+      QueryKit.connect(:invalid_db, {})
     end
     
     assert_match(/Unknown adapter type/, error.message)
@@ -34,7 +34,7 @@ class AdapterTest < Minitest::Test
   end
 
   def test_sqlite_adapter_execute
-    adapter = Quby::Adapters::SQLiteAdapter.new(':memory:')
+    adapter = QueryKit::Adapters::SQLiteAdapter.new(':memory:')
     adapter.execute('CREATE TABLE test (id INTEGER, name TEXT)')
     adapter.execute('INSERT INTO test VALUES (?, ?)', [1, 'Alice'])
     
@@ -48,7 +48,7 @@ class AdapterTest < Minitest::Test
   end
 
   def test_sqlite_adapter_transactions
-    adapter = Quby::Adapters::SQLiteAdapter.new(':memory:')
+    adapter = QueryKit::Adapters::SQLiteAdapter.new(':memory:')
     adapter.execute('CREATE TABLE test (id INTEGER, name TEXT)')
     
     adapter.begin_transaction
@@ -62,7 +62,7 @@ class AdapterTest < Minitest::Test
   end
 
   def test_sqlite_adapter_rollback
-    adapter = Quby::Adapters::SQLiteAdapter.new(':memory:')
+    adapter = QueryKit::Adapters::SQLiteAdapter.new(':memory:')
     adapter.execute('CREATE TABLE test (id INTEGER, name TEXT)')
     
     adapter.begin_transaction

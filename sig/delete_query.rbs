@@ -1,0 +1,22 @@
+module QueryKit
+  # DeleteQuery class for building DELETE SQL queries
+  class DeleteQuery
+    attr_reader table: String?
+    attr_reader wheres: Array[Hash[Symbol, untyped]]
+    attr_reader bindings: Array[untyped]
+
+    def initialize: (?String? table) -> void
+
+    # Set the table to delete from
+    def from: (String table) -> self
+
+    # WHERE conditions
+    def where: (String column, ?String? operator, ?untyped value) -> self
+    def where_in: (String column, Array[untyped] values) -> self
+    def where_null: (String column) -> self
+
+    # Generate the SQL DELETE statement
+    def to_sql: () -> String
+    def to_s: () -> String
+  end
+end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Quby
+module QueryKit
   # Builder for CASE WHEN expressions
   # Used internally by Query when select_case is called
   class CaseBuilder

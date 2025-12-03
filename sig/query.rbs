@@ -1,0 +1,83 @@
+module QueryKit
+  # Query builder for constructing SQL SELECT statements
+  class Query
+    attr_reader table: String?
+    attr_reader wheres: Array[Hash[Symbol, untyped]]
+    attr_reader selects: Array[String]
+    attr_reader joins: Array[Hash[Symbol, untyped]]
+    attr_reader orders: Array[String]
+    attr_reader groups: Array[String]
+    attr_reader limit_value: Integer?
+    attr_reader offset_value: Integer?
+    attr_accessor bindings: Array[untyped]
+
+    def initialize: (?String? table) -> void
+
+    # Table methods
+    def from: (String table) -> self
+
+    # SELECT methods
+    def select: (*String columns) -> self
+    def distinct: () -> self
+
+    # WHERE methods
+    def where: (String | Hash[String | Symbol, untyped] column, ?String? operator, ?untyped value) -> self
+    def or_where: (String column, ?String? operator, ?untyped value) -> self
+    def where_in: (String column, Array[untyped] values) -> self
+    def where_not_in: (String column, Array[untyped] values) -> self
+    def where_null: (String column) -> self
+    def where_not_null: (String column) -> self
+    def where_between: (String column, untyped min, untyped max) -> self
+    def where_raw: (String sql, *untyped bindings) -> self
+    def where_exists: (String | Query subquery) -> self
+    def where_not_exists: (String | Query subquery) -> self
+
+    # JOIN methods
+    def join: (String table, String first, ?String? operator, ?String? second) -> self
+    def left_join: (String table, String first, ?String? operator, ?String? second) -> self
+    def right_join: (String table, String first, ?String? operator, ?String? second) -> self
+    def cross_join: (String table) -> self
+
+    # ORDER BY, GROUP BY
+    def order_by: (String column, ?String direction) -> self
+    def group_by: (*String columns) -> self
+    def having: (String condition, *untyped bindings) -> self
+
+    # LIMIT, OFFSET
+    def limit: (Integer count) -> self
+    def offset: (Integer count) -> self
+    def skip: (Integer count) -> self
+    def take: (Integer count) -> self
+
+    # Pagination
+    def page: (Integer page_number, ?Integer per_page) -> self
+    def per_page: (Integer count) -> self
+
+    # Aggregates
+    def count: (?String? column) -> self
+    def sum: (String column) -> self
+    def avg: (String column) -> self
+    def min: (String column) -> self
+    def max: (String column) -> self
+
+    # UNION
+    def union: (Query query) -> self
+    def union_all: (Query query) -> self
+
+    # SQL generation
+    def to_sql: () -> String
+    def to_s: () -> String
+
+    private
+
+    def build_select_clause: () -> String
+    def build_from_clause: () -> String
+    def build_join_clause: () -> String
+    def build_where_clause: () -> String
+    def build_group_by_clause: () -> String
+    def build_having_clause: () -> String
+    def build_order_by_clause: () -> String
+    def build_limit_clause: () -> String
+    def build_union_clause: () -> String
+  end
+end

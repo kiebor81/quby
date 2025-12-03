@@ -1,4 +1,4 @@
-﻿# Quby 
+﻿# QueryKit 
 
 A fluent, intuitive query builder and micro-ORM for Ruby inspired by .NET''s SqlKata. Perfect for projects where Active Record feels like overkill.
 
@@ -20,6 +20,14 @@ A fluent, intuitive query builder and micro-ORM for Ruby inspired by .NET''s Sql
 ## Installation
 
 ```bash
+
+gem install querykit
+
+```
+
+Then your preferred database driver.
+
+```bash
 # SQLite
 gem install sqlite3
 
@@ -29,29 +37,26 @@ gem install pg
 # MySQL
 gem install mysql2
 ```
-
-
-
 ## Quick Start
 
 See [`demo.rb`](examples/demo.rb) for more extensive examples.
 
 ```ruby
-require_relative 'quby'
+require_relative 'querykit'
 
 # Configure once
-Quby.setup(:sqlite, database: 'app.db')
+QueryKit.setup(:sqlite, database: 'app.db')
 
 # Query builder
-users = Quby.connection.get(
-  Quby.connection.query('users')
+users = QueryKit.connection.get(
+  QueryKit.connection.query('users')
     .where('age', '>', 18)
     .order_by('name')
     .limit(10)
 )
 
 # Repository pattern (query scoping)
-class UserRepository < Quby::Repository
+class UserRepository < QueryKit::Repository
   table ''users''
   model User
 end
@@ -68,9 +73,14 @@ users = repo.where('age', '>', 18)
 - [Advanced Features](docs/advanced-features.md) - Model mapping, repositories, transactions
 - [API Reference](docs/api-reference.md) - Complete API documentation
 - [Security Best Practices](docs/security.md) - SQL injection protection and safe usage
+- [Concurrency & Thread Safety](docs/concurrency.md) - Multi-threaded usage and connection management
 - [CASE WHEN Extension](docs/extensions/case-when.md) - Optional fluent CASE expressions
 
-## Why Quby?
+**Full documentation site:** https://kiebor81.github.io/querykit
+
+**API documentation (YARD):** Generate locally with `rake doc`
+
+## Why QueryKit?
 
 **vs Active Record:** Much lighter, no DSL, no magic. Just build queries and execute them.
 
@@ -80,7 +90,7 @@ users = repo.where('age', '>', 18)
 
 ## Security
 
-Quby uses **parameterized queries by default**, protecting against SQL injection when used correctly:
+QueryKit uses **parameterized queries by default**, protecting against SQL injection when used correctly:
 
 ```ruby
 # SAFE - Values are automatically parameterized
@@ -105,16 +115,16 @@ db.raw('SELECT * FROM users WHERE email = ?', user_input)
 
 ## Extensions
 
-Quby supports optional extensions that add advanced features without bloating the core:
+QueryKit supports optional extensions that add advanced features without bloating the core:
 
 ```ruby
-require 'quby/extensions/case_when'
+require 'querykit/extensions/case_when'
 
 # Load extensions at startup
-Quby.use_extensions(Quby::CaseWhenExtension)
+QueryKit.use_extensions(QueryKit::CaseWhenExtension)
 
 # Or load multiple extensions
-Quby.use_extensions([Extension1, Extension2])
+QueryKit.use_extensions([Extension1, Extension2])
 ```
 
 Available extensions:
@@ -122,7 +132,7 @@ Available extensions:
 
 Extensions use Ruby's `prepend` to cleanly override methods without monkey-patching.
 
-## What Quby Doesn't Do
+## What QueryKit Doesn't Do
 
 These features are intentionally excluded to maintain simplicity:
 
@@ -154,10 +164,16 @@ db.raw('INSERT INTO users (id, name) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET
 
 ## Contributing
 
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+This project adheres to the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## Acknowledgments
 
 Inspired by [SqlKata](https://sqlkata.com/) (.NET) and [Arel](https://github.com/rails/arel) (Ruby).
 
+## License
+
 This is a personal project, but suggestions and bug reports are welcome via issues.
+
+MIT License - see [LICENSE](LICENSE) for details.

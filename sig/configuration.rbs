@@ -1,0 +1,22 @@
+module QueryKit
+  # Configuration class for global Quby settings
+  class Configuration
+    attr_accessor adapter: Symbol?
+    attr_accessor connection_options: Hash[Symbol, untyped]
+
+    def initialize: () -> void
+
+    # Configure with adapter and options
+    def setup: (Symbol adapter, Hash[Symbol, untyped] options) -> void
+
+    # Check if configuration is set
+    def configured?: () -> bool
+
+    # Validate configuration
+    def validate!: () -> void
+  end
+
+  # Error raised when attempting to use Quby without configuration
+  class ConfigurationError < StandardError
+  end
+end

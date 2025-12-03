@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quby (0.1.0)
+    querykit (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -26,16 +26,17 @@ GEM
     simplecov_json_formatter (0.1.4)
     sqlite3 (1.7.3)
       mini_portile2 (~> 2.8.0)
+    sqlite3 (1.7.3-x64-mingw-ucrt)
 
 PLATFORMS
   ruby
   x64-mingw-ucrt
 
 DEPENDENCIES
-  minitest (~> 5.16)
-  minitest-reporters (~> 1.5)
-  quby!
-  rake (~> 13.0)
+  minitest (~> 5.26)
+  minitest-reporters (~> 1.7)
+  querykit!
+  rake (~> 13.3)
   simplecov (~> 0.22)
   sqlite3 (~> 1.6)
 

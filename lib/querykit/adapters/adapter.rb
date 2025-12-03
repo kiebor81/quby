@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Quby
+module QueryKit
   module Adapters
     # Abstract adapter base class
     class Adapter

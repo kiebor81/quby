@@ -1,12 +1,60 @@
 # frozen_string_literal: true
 
-module Quby
-  # Query class for building SQL SELECT statements.
+module QueryKit
+  # Query builder for constructing SQL SELECT statements.
+  #
+  # Provides a fluent, chainable API for building complex SQL queries
+  # with automatic parameter binding for security.
+  #
+  # @example Basic query
+  #   query = Query.new('users')
+  #     .select('id', 'name', 'email')
+  #     .where('age', '>', 18)
+  #     .order_by('name')
+  #     .limit(10)
+  #
+  # @example Complex query with joins
+  #   query = Query.new('users')
+  #     .join('posts', 'users.id', 'posts.user_id')
+  #     .where('users.active', true)
+  #     .where('posts.published', true)
+  #     .select('users.*', 'COUNT(posts.id) as post_count')
+  #     .group_by('users.id')
   class Query
-    attr_reader :table, :wheres, :selects, :joins, :orders, :groups, :limit_value, :offset_value
+    # @return [String, nil] the table name for this query
+    attr_reader :table
+    
+    # @return [Array<Hash>] the WHERE conditions
+    attr_reader :wheres
+    
+    # @return [Array<String>] the columns to select
+    attr_reader :selects
+    
+    # @return [Array<Hash>] the JOIN clauses
+    attr_reader :joins
+    
+    # @return [Array<String>] the ORDER BY clauses
+    attr_reader :orders
+    
+    # @return [Array<String>] the GROUP BY columns
+    attr_reader :groups
+    
+    # @return [Integer, nil] the LIMIT value
+    attr_reader :limit_value
+    
+    # @return [Integer, nil] the OFFSET value
+    attr_reader :offset_value
+    
+    # @return [Array] the parameter bindings for safe query execution
     attr_accessor :bindings
 
     # Initialize a new Query instance.
+    #
+    # @param table [String, nil] the table name to query
+    #
+    # @example
+    #   query = Query.new('users')
+    #   query = Query.new  # table can be set later with from()
     def initialize(table = nil)
       @table = table
       @selects = []
@@ -22,26 +70,73 @@ module Quby
       @unions = []
     end
 
-    # Set the table
+    # Set the table name for this query.
+    #
+    # @param table [String] the table name
+    # @return [Query] self for method chaining
+    #
+    # @example
+    #   query.from('users')
     def from(table)
       @table = table
       self
     end
 
-    # SELECT clause
+    # Specify columns to select.
+    #
+    # @param columns [Array<String>] column names to select. Defaults to '*' if none provided.
+    # @return [Query] self for method chaining
+    #
+    # @example Select specific columns
+    #   query.select('id', 'name', 'email')
+    #
+    # @example Select with aliases
+    #   query.select('users.id', 'users.name as user_name')
+    #
+    # @example Select all columns (default)
+    #   query.select  # equivalent to SELECT *
     def select(*columns)
       columns = ['*'] if columns.empty?
       @selects.concat(columns.flatten)
       self
     end
 
-    # Set the query to return distinct results
+    # Set the query to return distinct results.
+    #
+    # @return [Query] self for method chaining
+    #
+    # @example
+    #   query.select('country').distinct
     def distinct
       @distinct = true
       self
     end
 
-    # WHERE clauses
+    # Add a WHERE condition to the query.
+    #
+    # Supports multiple calling patterns for flexibility.
+    # Values are automatically parameterized for SQL injection protection.
+    #
+    # @overload where(column, value)
+    #   @param column [String] the column name
+    #   @param value [Object] the value to compare (assumes = operator)
+    #   @example
+    #     query.where('status', 'active')
+    #
+    # @overload where(column, operator, value)
+    #   @param column [String] the column name
+    #   @param operator [String] comparison operator (=, >, <, >=, <=, !=, LIKE)
+    #   @param value [Object] the value to compare
+    #   @example
+    #     query.where('age', '>', 18)
+    #     query.where('name', 'LIKE', 'John%')
+    #
+    # @overload where(hash)
+    #   @param hash [Hash] column-value pairs (all use = operator)
+    #   @example
+    #     query.where(status: 'active', country: 'USA')
+    #
+    # @return [Query] self for method chaining
     def where(column, operator = nil, value = nil)
       # Handle different argument patterns
       if column.is_a?(Hash)
@@ -60,6 +155,15 @@ module Quby
     end
 
     # Add an OR WHERE condition to the query.
+    #
+    # @param column [String] the column name
+    # @param operator [String, Object] the operator or value (if value is nil)
+    # @param value [Object, nil] the value to compare
+    #
+    # @return [Query] self for method chaining
+    #
+    # @example
+    #   query.where('status', 'active').or_where('priority', 'high')
     def or_where(column, operator = nil, value = nil)
       if value.nil? && !operator.nil?
         value = operator

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Quby
+module QueryKit
   # Base repository class for implementing the repository pattern
   # 
   # Usage:
-  #   class UserRepository < Quby::Repository
+  #   class UserRepository < QueryKit::Repository
   #     table 'users'
   #     model User
   #   end
@@ -41,10 +41,10 @@ module Quby
     attr_reader :db
     
     # Initialize repository with optional database connection
-    # If no connection provided, uses global Quby.connection
-    # @param db [Quby::Connection, nil] Database connection
+    # If no connection provided, uses global QueryKit.connection
+    # @param db [QueryKit::Connection, nil] Database connection
     def initialize(db = nil)
-      @db = db || Quby.connection
+      @db = db || QueryKit.connection
     end
     
     # Get all records
@@ -140,14 +140,14 @@ module Quby
     end
     
     # Execute a custom query with model mapping
-    # @param custom_query [Quby::Query] A custom query object
+    # @param custom_query [QueryKit::Query] A custom query object
     # @return [Array] Array of model instances
     def execute(custom_query)
       @db.get(custom_query, model_class)
     end
     
     # Execute a custom query and return first result
-    # @param custom_query [Quby::Query] A custom query object
+    # @param custom_query [QueryKit::Query] A custom query object
     # @return [Object, nil] Model instance or nil
     def execute_first(custom_query)
       @db.first(custom_query, model_class)

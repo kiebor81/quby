@@ -2,7 +2,7 @@
 
 require_relative 'adapter'
 
-module Quby
+module QueryKit
   module Adapters
     class SQLiteAdapter < Adapter
       def initialize(database_path)

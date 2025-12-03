@@ -1,0 +1,46 @@
+module QueryKit
+  # Base repository class for implementing the repository pattern
+  class Repository
+    attr_reader db: Connection
+
+    def self.table: (String name) -> void
+    def self.model: (Class klass) -> void
+    def self.table_name: () -> String?
+    def self.model_class: () -> Class?
+
+    def initialize: (?Connection? db) -> void
+
+    # Query methods
+    def all: () -> Array[untyped]
+    def find: (Integer | String id) -> untyped
+    def find_by: (String column, untyped value) -> untyped
+    def where: (String column, String | untyped operator_or_value, ?untyped value) -> Array[untyped]
+    def where_in: (String column, Array[untyped] values) -> Array[untyped]
+    def where_not_in: (String column, Array[untyped] values) -> Array[untyped]
+    def first: () -> untyped
+    def count: () -> Integer
+    def exists?: (?Integer | String? id) -> bool
+
+    # CRUD operations
+    def create: (Hash[String | Symbol, untyped] attributes) -> Integer
+    def insert: (Hash[String | Symbol, untyped] attributes) -> Integer
+    def update: (Integer | String id, Hash[String | Symbol, untyped] attributes) -> Integer
+    def delete: (Integer | String id) -> Integer
+    def destroy: (Integer | String id) -> Integer
+
+    # Bulk operations
+    def delete_all: () -> Integer
+    def update_all: (Hash[String | Symbol, untyped] attributes) -> Integer
+
+    # Advanced queries
+    def order_by: (String column, ?String direction) -> Array[untyped]
+    def limit: (Integer count) -> Array[untyped]
+    def paginate: (Integer page, ?Integer per_page) -> Array[untyped]
+
+    private
+
+    def query: () -> Query
+    def table_name: () -> String
+    def model_class: () -> Class?
+  end
+end

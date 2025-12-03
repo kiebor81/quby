@@ -11,37 +11,37 @@ class ConnectionTest < Minitest::Test
 
   def test_query_factory_method
     query = @db.query('users')
-    assert_instance_of Quby::Query, query
+    assert_instance_of QueryKit::Query, query
     assert_equal 'users', query.table
   end
 
   def test_from_factory_method
     query = @db.from('users')
-    assert_instance_of Quby::Query, query
+    assert_instance_of QueryKit::Query, query
     assert_equal 'users', query.table
   end
 
   def test_table_factory_method
     query = @db.table('users')
-    assert_instance_of Quby::Query, query
+    assert_instance_of QueryKit::Query, query
     assert_equal 'users', query.table
   end
 
   def test_insert_factory_method
     query = @db.insert('users')
-    assert_instance_of Quby::InsertQuery, query
+    assert_instance_of QueryKit::InsertQuery, query
     assert_equal 'users', query.table
   end
 
   def test_update_factory_method
     query = @db.update('users')
-    assert_instance_of Quby::UpdateQuery, query
+    assert_instance_of QueryKit::UpdateQuery, query
     assert_equal 'users', query.table
   end
 
   def test_delete_factory_method
     query = @db.delete('users')
-    assert_instance_of Quby::DeleteQuery, query
+    assert_instance_of QueryKit::DeleteQuery, query
     assert_equal 'users', query.table
   end
 

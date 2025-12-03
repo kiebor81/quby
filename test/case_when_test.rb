@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/quby'
-require_relative '../lib/quby/extensions/case_when'
+require_relative '../lib/querykit'
+require_relative '../lib/querykit/extensions/case_when'
 
 # Enable the extension for testing
-Quby::Query.prepend(Quby::CaseWhenExtension)
+QueryKit::Query.prepend(QueryKit::CaseWhenExtension)
 
 class CaseWhenTest < Minitest::Test
   def setup
-    @query = Quby::Query.new
+    @query = QueryKit::Query.new
     @query.from('users')
   end
 

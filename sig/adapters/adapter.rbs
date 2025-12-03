@@ -1,0 +1,14 @@
+module QueryKit
+  module Adapters
+    # Abstract adapter base class
+    class Adapter
+      def execute: (String sql, ?Array[untyped] bindings) -> Array[Hash[String, untyped]]
+      def begin_transaction: () -> void
+      def commit: () -> void
+      def rollback: () -> void
+      def close: () -> void
+      def last_insert_id: () -> Integer
+      def affected_rows: () -> Integer
+    end
+  end
+end

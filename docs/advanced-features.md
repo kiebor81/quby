@@ -21,7 +21,7 @@ end
 ### Use with Queries
 
 ```ruby
-db = Quby.connection
+db = QueryKit.connection
 
 # get() with model
 query = db.query('users').where('age', '>', 18)
@@ -58,17 +58,17 @@ class User
   end
 end
 
-class UserRepository < Quby::Repository
+class UserRepository < QueryKit::Repository
   table 'users'
   model User
 end
 
 # Use with global config
-Quby.setup(:sqlite, database: 'app.db')
+QueryKit.setup(:sqlite, database: 'app.db')
 repo = UserRepository.new
 
 # Or with explicit connection
-db = Quby.connect(:sqlite, 'app.db')
+db = QueryKit.connect(:sqlite, 'app.db')
 repo = UserRepository.new(db)
 ```
 
@@ -112,7 +112,7 @@ affected = repo.delete_where(status: 'inactive')
 ### Custom Repository Methods
 
 ```ruby
-class UserRepository < Quby::Repository
+class UserRepository < QueryKit::Repository
   table 'users'
   model User
   
@@ -157,7 +157,7 @@ end
 All adapters support transactions:
 
 ```ruby
-db = Quby.connection
+db = QueryKit.connection
 
 db.transaction do
   # Insert

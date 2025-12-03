@@ -2,32 +2,32 @@
 
 ## Global Configuration
 
-### `Quby.configure { |config| ... }`
+### `QueryKit.configure { |config| ... }`
 Configure Quby with a block.
 
 ```ruby
-Quby.configure do |config|
+QueryKit.configure do |config|
   config.adapter = :sqlite
   config.connection_options = { database: 'app.db' }
 end
 ```
 
-### `Quby.setup(adapter, options)`
+### `QueryKit.setup(adapter, options)`
 Shorthand configuration.
 
 ```ruby
-Quby.setup(:sqlite, database: 'app.db')
-Quby.setup(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
-Quby.setup(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
+QueryKit.setup(:sqlite, database: 'app.db')
+QueryKit.setup(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
+QueryKit.setup(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
 ```
 
-### `Quby.connection`
-Get the global connection. Raises `Quby::ConfigurationError` if not configured.
+### `QueryKit.connection`
+Get the global connection. Raises `QueryKit::ConfigurationError` if not configured.
 
-### `Quby.reset!`
+### `QueryKit.reset!`
 Reset configuration and connection (useful for testing).
 
-### `Quby.connect(adapter, options)`
+### `QueryKit.connect(adapter, options)`
 Create a new connection without global configuration.
 
 ## Query Builder
@@ -141,18 +141,18 @@ Three built-in adapters:
 
 ### SQLiteAdapter
 ```ruby
-Quby.connect(:sqlite, 'database.db')
-Quby.connect(:sqlite, ':memory:')
+QueryKit.connect(:sqlite, 'database.db')
+QueryKit.connect(:sqlite, ':memory:')
 ```
 
 ### PostgreSQLAdapter
 ```ruby
-Quby.connect(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
+QueryKit.connect(:postgresql, host: 'localhost', dbname: 'mydb', user: 'postgres', password: 'pass')
 ```
 
 ### MySQLAdapter
 ```ruby
-Quby.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
+QueryKit.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root', password: 'pass')
 ```
 
 ## Return Values
@@ -167,5 +167,5 @@ Quby.connect(:mysql, host: 'localhost', database: 'mydb', username: 'root', pass
 ## Exceptions
 
 - `ArgumentError` - Invalid arguments (no table, no values, unknown adapter)
-- `Quby::ConfigurationError` - Accessing `Quby.connection` without configuration
+- `QueryKit::ConfigurationError` - Accessing `QueryKit.connection` without configuration
 - Database-specific exceptions from drivers (sqlite3, pg, mysql2)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../lib/quby'
+require_relative '../lib/querykit'
 
 class ExtensionSystemTest < Minitest::Test
   def setup
@@ -17,9 +17,9 @@ class ExtensionSystemTest < Minitest::Test
       end
     end
 
-    Quby.use_extensions(test_extension)
+    QueryKit.use_extensions(test_extension)
     
-    query = Quby::Query.new
+    query = QueryKit::Query.new
     assert_respond_to query, :test_method
     assert_equal 'extension_loaded', query.test_method
   end
@@ -37,9 +37,9 @@ class ExtensionSystemTest < Minitest::Test
       end
     end
 
-    Quby.use_extensions(ext1, ext2)
+    QueryKit.use_extensions(ext1, ext2)
     
-    query = Quby::Query.new
+    query = QueryKit::Query.new
     assert_respond_to query, :ext1_method
     assert_respond_to query, :ext2_method
     assert_equal 'ext1', query.ext1_method
@@ -59,9 +59,9 @@ class ExtensionSystemTest < Minitest::Test
       end
     end
 
-    Quby.use_extensions([ext1, ext2])
+    QueryKit.use_extensions([ext1, ext2])
     
-    query = Quby::Query.new
+    query = QueryKit::Query.new
     assert_respond_to query, :array_ext1
     assert_respond_to query, :array_ext2
   end
@@ -76,9 +76,9 @@ class ExtensionSystemTest < Minitest::Test
       attr_reader :custom_select_called
     end
 
-    Quby.use_extensions(override_ext)
+    QueryKit.use_extensions(override_ext)
     
-    query = Quby::Query.new.from('users')
+    query = QueryKit::Query.new.from('users')
     query.select('id', 'name')
     
     assert query.custom_select_called

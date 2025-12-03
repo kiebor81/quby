@@ -2,7 +2,7 @@
 
 require_relative '../case_builder'
 
-module Quby
+module QueryKit
   # Extension module that adds CASE WHEN support to Query
   # Include this in Query to enable select_case functionality
   module CaseWhenExtension

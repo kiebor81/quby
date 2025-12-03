@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Quby
+module QueryKit
   # InsertQuery class for building INSERT SQL queries
   class InsertQuery
     attr_reader :table, :values, :bindings

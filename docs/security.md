@@ -190,7 +190,7 @@ db.query('logs').where('message', malicious_data)
 Repositories should validate input at the boundary:
 
 ```ruby
-class UserRepository < Quby::Repository
+class UserRepository < QueryKit::Repository
   table 'users'
   model User
   

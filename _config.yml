@@ -1,0 +1,23 @@
+title: QueryKit
+description: A lightweight, fluent query builder for Ruby
+theme: jekyll-theme-cayman
+show_downloads: true
+github:
+  repository_url: https://github.com/kiebor81/querykit
+  is_project_page: true
+
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: false
+
+include:
+  - README.md
+  - docs
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge

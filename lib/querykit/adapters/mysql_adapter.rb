@@ -2,7 +2,7 @@
 
 require_relative 'adapter'
 
-module Quby
+module QueryKit
   module Adapters
     class MySQLAdapter < Adapter
       def initialize(config)

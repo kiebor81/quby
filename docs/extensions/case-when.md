@@ -7,17 +7,17 @@ An optional extension that adds fluent CASE WHEN support to Quby queries.
 The extension is **opt-in**. Enable it using the plugin system:
 
 ```ruby
-require 'quby'
+require 'querykit'
 require 'quby/extensions/case_when'
 
 # Enable the extension
-Quby.use_extensions(Quby::CaseWhenExtension)
+QueryKit.use_extensions(QueryKit::CaseWhenExtension)
 ```
 
 Or directly with prepend:
 
 ```ruby
-Quby::Query.prepend(Quby::CaseWhenExtension)
+QueryKit::Query.prepend(QueryKit::CaseWhenExtension)
 ```
 
 ## Usage

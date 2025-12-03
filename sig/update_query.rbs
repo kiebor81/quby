@@ -1,0 +1,25 @@
+module QueryKit
+  # UpdateQuery class for building UPDATE SQL queries
+  class UpdateQuery
+    attr_reader sets: Hash[String, untyped]
+    attr_reader wheres: Array[Hash[Symbol, untyped]]
+    attr_reader bindings: Array[untyped]
+
+    def initialize: (?String? table) -> void
+
+    # Set the table to update (also acts as getter via attr_reader in implementation)
+    def table: (String table) -> self
+
+    # Set column values
+    def set: (Hash[String | Symbol, untyped] data) -> self
+
+    # WHERE conditions
+    def where: (String column, ?String? operator, ?untyped value) -> self
+    def where_in: (String column, Array[untyped] values) -> self
+    def where_null: (String column) -> self
+
+    # Generate the SQL UPDATE statement
+    def to_sql: () -> String
+    def to_s: () -> String
+  end
+end

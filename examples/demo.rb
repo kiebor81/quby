@@ -12,8 +12,8 @@ db_file = 'demo.db'
 File.delete(db_file) if File.exist?(db_file)
 
 # Configure globally
-Quby.setup(:sqlite, database: db_file)
-db = Quby.connection
+QueryKit.setup(:sqlite, database: db_file)
+db = QueryKit.connection
 
 # Create schema
 db.raw(<<~SQL)
@@ -126,7 +126,7 @@ puts
 puts "4. REPOSITORY PATTERN"
 puts "-" * 70
 
-class UserRepository < Quby::Repository
+class UserRepository < QueryKit::Repository
   table 'users'
   model User
   
@@ -141,7 +141,7 @@ class UserRepository < Quby::Repository
   end
 end
 
-repo = UserRepository.new  # Uses global Quby.connection
+repo = UserRepository.new  # Uses global QueryKit.connection
 
 # CRUD operations
 user = repo.find(1)

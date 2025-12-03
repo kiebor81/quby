@@ -5,7 +5,7 @@
 ### Basic Queries
 
 ```ruby
-db = Quby.connection
+db = QueryKit.connection
 
 # All columns
 db.query('users')

@@ -1,0 +1,36 @@
+module QueryKit
+  # Connection class to manage database interactions
+  class Connection
+    attr_reader adapter: Adapters::Adapter
+
+    def initialize: (Adapters::Adapter adapter) -> void
+
+    # Query builder factory methods
+    def query: (?String? table) -> Query
+    def from: (String table) -> Query
+    def table: (String table) -> Query
+
+    # Build query objects
+    def insert: (?String? table) -> InsertQuery
+    def update: (?String? table) -> UpdateQuery
+    def delete: (?String? table) -> DeleteQuery
+
+    # Execute queries
+    def get: (Query query, ?Class? model_class) -> Array[Hash[String, untyped] | untyped]
+    def first: (Query query, ?Class? model_class) -> (Hash[String, untyped] | untyped)?
+    def execute_insert: (InsertQuery query) -> Integer
+    def execute_update: (UpdateQuery query) -> Integer
+    def execute_delete: (DeleteQuery query) -> Integer
+    def execute_scalar: (Query query) -> untyped
+
+    # Raw SQL
+    def raw: (String sql, *untyped bindings, ?model_class: Class?) -> Array[Hash[String, untyped] | untyped]
+
+    # Transaction support
+    def transaction: () { () -> untyped } -> untyped
+
+    private
+
+    def map_to_model: (Hash[String, untyped] row, Class model_class) -> untyped
+  end
+end

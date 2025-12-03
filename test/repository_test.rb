@@ -20,7 +20,7 @@ class RepoTestPost
 end
 
 # Test repositories
-class TestUserRepo < Quby::Repository
+class TestUserRepo < QueryKit::Repository
   table 'users'
   model RepoTestUser
   
@@ -29,7 +29,7 @@ class TestUserRepo < Quby::Repository
   end
 end
 
-class TestPostRepo < Quby::Repository
+class TestPostRepo < QueryKit::Repository
   table 'posts'
   model RepoTestPost
   
@@ -279,7 +279,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_repository_without_table_raises_error
-    repo_class = Class.new(Quby::Repository) do
+    repo_class = Class.new(QueryKit::Repository) do
       model RepoTestUser
     end
     
@@ -289,7 +289,7 @@ class RepositoryTest < Minitest::Test
   end
 
   def test_repository_without_model_raises_error
-    repo_class = Class.new(Quby::Repository) do
+    repo_class = Class.new(QueryKit::Repository) do
       table 'users'
     end
     

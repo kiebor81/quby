@@ -23,6 +23,11 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+vendor/bundle/
+
+# Gem build artifacts
+*.gem
+Gemfile.lock
 
 # YARD artifacts
 .yardoc

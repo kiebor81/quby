@@ -4,9 +4,9 @@ gemspec
 
 # Development and testing dependencies
 group :development, :test do
-  gem 'rake', '~> 13.0'
-  gem 'minitest', '~> 5.16'
-  gem 'minitest-reporters', '~> 1.5'
+  gem 'rake', '~> 13.3'
+  gem 'minitest', '~> 5.26'
+  gem 'minitest-reporters', '~> 1.7'
   gem 'simplecov', '~> 0.22', require: false
 end
 

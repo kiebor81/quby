@@ -1,0 +1,10 @@
+module QueryKit
+  # Extension module that adds CASE WHEN support to Query
+  module CaseWhenExtension
+    # Start a CASE expression and return the builder
+    def select_case: (?String? column) -> CaseBuilder
+
+    # Override select to handle CaseBuilder objects
+    def select: (*String | CaseBuilder columns) -> Query
+  end
+end

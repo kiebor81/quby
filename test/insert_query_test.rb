@@ -4,7 +4,7 @@ require_relative 'test_helper'
 
 class InsertQueryTest < Minitest::Test
   def test_single_insert
-    query = Quby::InsertQuery.new('users').values(
+    query = QueryKit::InsertQuery.new('users').values(
       name: 'Alice',
       email: 'alice@example.com',
       age: 28
@@ -15,7 +15,7 @@ class InsertQueryTest < Minitest::Test
   end
 
   def test_bulk_insert
-    query = Quby::InsertQuery.new('users').values([
+    query = QueryKit::InsertQuery.new('users').values([
       { name: 'Alice', email: 'alice@example.com', age: 28 },
       { name: 'Bob', email: 'bob@example.com', age: 35 },
       { name: 'Charlie', email: 'charlie@example.com', age: 42 }
@@ -27,18 +27,18 @@ class InsertQueryTest < Minitest::Test
   end
 
   def test_into_method
-    query = Quby::InsertQuery.new.into('users').values(name: 'Alice', email: 'alice@example.com')
+    query = QueryKit::InsertQuery.new.into('users').values(name: 'Alice', email: 'alice@example.com')
     assert_equal 'INSERT INTO users (name, email) VALUES (?, ?)', query.to_sql
   end
 
   def test_no_table_raises_error
-    query = Quby::InsertQuery.new
+    query = QueryKit::InsertQuery.new
     error = assert_raises(RuntimeError) { query.to_sql }
     assert_equal 'No table specified', error.message
   end
 
   def test_no_values_raises_error
-    query = Quby::InsertQuery.new('users')
+    query = QueryKit::InsertQuery.new('users')
     error = assert_raises(RuntimeError) { query.to_sql }
     assert_equal 'No values specified', error.message
   end

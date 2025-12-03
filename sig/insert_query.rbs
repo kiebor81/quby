@@ -1,0 +1,19 @@
+module QueryKit
+  # InsertQuery class for building INSERT SQL queries
+  class InsertQuery
+    attr_reader table: String?
+    attr_reader bindings: Array[untyped]
+
+    def initialize: (?String? table) -> void
+
+    # Set the table to insert into
+    def into: (String table) -> self
+
+    # Set the values to insert (also acts as getter via attr_reader in implementation)
+    def values: (Hash[String | Symbol, untyped] | Array[Hash[String | Symbol, untyped]] data) -> self
+
+    # Generate the SQL INSERT statement
+    def to_sql: () -> String
+    def to_s: () -> String
+  end
+end

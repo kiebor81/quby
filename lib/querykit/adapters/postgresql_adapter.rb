@@ -2,7 +2,7 @@
 
 require_relative 'adapter'
 
-module Quby
+module QueryKit
   module Adapters
     class PostgreSQLAdapter < Adapter
       def initialize(config)

@@ -4,14 +4,14 @@ require_relative '../lib/quby'
 require_relative '../lib/quby/extensions/case_when'
 
 # Enable the CASE WHEN extension using the plugin system
-Quby.use_extensions(Quby::CaseWhenExtension)
+QueryKit.use_extensions(QueryKit::CaseWhenExtension)
 
 # Setup database
 db_file = 'case_demo.db'
 File.delete(db_file) if File.exist?(db_file)
 
-Quby.setup(:sqlite, database: db_file)
-db = Quby.connection
+QueryKit.setup(:sqlite, database: db_file)
+db = QueryKit.connection
 
 # Create test table
 db.raw(<<~SQL)

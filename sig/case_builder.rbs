@@ -1,0 +1,23 @@
+module QueryKit
+  # Builder for SQL CASE expressions
+  class CaseBuilder
+    attr_reader column: String?
+    attr_reader whens: Array[Hash[Symbol, untyped]]
+    attr_reader else_value: untyped
+    attr_reader bindings: Array[untyped]
+
+    def initialize: (?String? column) -> void
+
+    # Add a WHEN condition
+    def when: (untyped condition, ?untyped then_value) -> self
+
+    # Set the ELSE value
+    def else: (untyped value) -> self
+
+    # Set an alias for the CASE expression
+    def as: (String alias_name) -> self
+
+    # Generate SQL
+    def to_sql: () -> String
+  end
+end
