@@ -63,7 +63,7 @@ users = QueryKit.connection.get(
 
 # Repository pattern (query scoping)
 class UserRepository < QueryKit::Repository
-  table ''users''
+  table 'users'
   model User
 end
 
